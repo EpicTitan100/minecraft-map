@@ -1,11 +1,13 @@
 // Mapbox GL JS v3.5.2 from CDN
 const mapboxgl = window.mapboxgl;
 
-// Mapbox access token — replace with your own public token from https://account.mapbox.com/access-tokens/
-const mapBoxToken = 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
+// Mapbox public token is entered once in the browser and stored locally.
+// Never commit a token to the repo: GitHub secret scanning blocks it.
+let mapBoxToken = localStorage.getItem('mapboxToken') || '';
 
-if (mapBoxToken === 'YOUR_MAPBOX_ACCESS_TOKEN_HERE') {
-  alert('Add your Mapbox access token in script.js (replace YOUR_MAPBOX_ACCESS_TOKEN_HERE).');
+if (!mapBoxToken) {
+  mapBoxToken = window.prompt('Paste your Mapbox public access token (starts with pk.)') || '';
+  if (mapBoxToken) localStorage.setItem('mapboxToken', mapBoxToken);
 }
 
 mapboxgl.accessToken = mapBoxToken;
