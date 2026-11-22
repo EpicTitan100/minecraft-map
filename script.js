@@ -1,4 +1,14 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiamFtbXlkb2RnZXIyMTIwIiwiYSI6ImNtd3Mzdm95OTFncmcyenNka3BqcW0wd2YifQ.uOt41fLKAtQ3hp99nn30yg';
+// Mapbox GL JS v3.5.2 from CDN
+const mapboxgl = window.mapboxgl;
+
+// Mapbox access token — replace with your own public token from https://account.mapbox.com/access-tokens/
+const mapBoxToken = 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
+
+if (mapBoxToken === 'YOUR_MAPBOX_ACCESS_TOKEN_HERE') {
+  alert('Add your Mapbox access token in script.js (replace YOUR_MAPBOX_ACCESS_TOKEN_HERE).');
+}
+
+mapboxgl.accessToken = mapBoxToken;
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -39,11 +49,14 @@ map.on('move', () => {
 
 // Fit to the user's current location if available
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((pos) => {
-    map.flyTo({
-      center: [pos.coords.longitude, pos.coords.latitude],
-      zoom: 15,
-      essential: true,
+  // Ask for permission before using location
+  if (window.confirm('May we use your location to center/fly the map?')) {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      map.flyTo({
+        center: [pos.coords.longitude, pos.coords.latitude],
+        zoom: 15,
+        essential: true,
+      });
     });
-  });
+  }
 }
